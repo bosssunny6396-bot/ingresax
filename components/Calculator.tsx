@@ -141,12 +141,12 @@ const statusColor = getStatusColor(primeCostValue);
           <div className="button-row">
             <button onClick={handleBack}>Back</button>
             <a
-              href="https://calendly.com/yourname/diagnostic"
+              href="https://calendly.com/ingresax/diagnostico"
               target="_blank"
               rel="noopener noreferrer"
               className="cta-link"
             >
-              Schedule Full Diagnostic
+               Descubrir fugas operativas exactas
             </a>
           </div>
         </div>
