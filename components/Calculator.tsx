@@ -90,14 +90,15 @@ export default function Calculator() {
   const results = runDiagnostic(inputs);
   const hasError = typeof (results as any).error === "string";
 
+  const primeCost = typeof results.primeCost === "number" ? results.primeCost : 0;
+
   const getStatusColor = (primeCost: number) => {
     if (primeCost < 60) return "#16A34A"; // Healthy (Green)
     if (primeCost <= 70) return "#EAB308"; // Unstable (Yellow)
     return "#DC2626"; // Critical (Red)
   };
 
-  const primeCostValue = Number(results.primeCost ?? 0);
-  const statusColor = getStatusColor(primeCostValue);
+  const statusColor = getStatusColor(primeCost);
 
   return (
     <div className="calculator-box">
@@ -133,7 +134,7 @@ export default function Calculator() {
           {hasError ? (
             <>
               <p className="results-label">Error</p>
-              <p className="error-message">{(results as any).error}</p>
+              <p className="diagnostic-warning">{(results as any).error}</p>
               <div className="button-row">
                 <button onClick={handleBack}>Back</button>
               </div>
@@ -146,60 +147,60 @@ export default function Calculator() {
               {/* Prime Cost Section */}
               <div className="result-card">
                 <span>Prime Cost %</span>
-                <strong style={{ color: statusColor }}>{results.primeCost}%</strong>
+                <strong style={{ color: statusColor }}>{primeCost}%</strong>
               </div>
 
-              {/* Industry Range Section */}
-              <div className="result-card">
-                <span>Industry Range</span>
-                <strong>55–60%</strong>
-              </div>
+          {/* Industry Range Section */}
+          <div className="result-card">
+            <span>Industry Range</span>
+            <strong>55–60%</strong>
+          </div>
 
-              {/* Gap Section */}
-              <div className="result-card">
-                <span>Gap</span>
-                <strong>
-                  {results.primeCost > 60
-                    ? `${(results.primeCost - 60).toFixed(1)}% por encima del rango`
-                    : `${(60 - results.primeCost).toFixed(1)}% por debajo del rango`}
-                </strong>
-              </div>
+          {/* Gap Section */}
+          <div className="result-card">
+            <span>Gap</span>
+            <strong>
+              {primeCost > 0
+                ? primeCost > 60
+                  ? `${(primeCost - 60).toFixed(1)}% por encima del rango`
+                  : `${(60 - primeCost).toFixed(1)}% por debajo del rango`
+                : "N/A"}
+            </strong>
+          </div>
 
-              {/* Status Section */}
-              <div className="result-card">
-                <span>Status</span>
-                <strong style={{ color: statusColor }}>{results.status}</strong>
-              </div>
+          {/* Status Section */}
+          <div className="result-card">
+            <span>Status</span>
+            <strong style={{ color: statusColor }}>{(results as any).status ?? "N/A"}</strong>
+          </div>
 
-              {/* Largest Operational Leak */}
-              <div className="result-card">
-                <span>Largest Operational Leak</span>
-                <strong>{results.largestLeak}</strong>
-              </div>
+          {/* Largest Operational Leak */}
+          <div className="result-card">
+            <span>Largest Operational Leak</span>
+            <strong>{(results as any).largestLeak ?? "N/A"}</strong>
+          </div>
 
-              {/* Estimated Monthly Opportunity Section */}
-              <div className="result-card">
-                <span>Estimated Monthly Opportunity</span>
-                <strong>${results.estimatedOpportunity}</strong>
-              </div>
+          {/* Estimated Monthly Opportunity Section */}
+          <div className="result-card">
+            <span>Estimated Monthly Opportunity</span>
+            <strong>${(results as any).estimatedOpportunity ?? "0"}</strong>
+          </div>
 
-              <p className="diagnostic-warning">
-                Tu Prime Cost puede indicar un problema estructural.
-              </p>
+          <p className="diagnostic-warning">
+            Tu Prime Cost puede indicar un problema estructural.
+          </p>
 
-              <div className="button-row">
-                <button onClick={handleBack}>Back</button>
-                <a
-                  href="https://calendly.com/ingresax/diagnostico"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cta-link"
-                >
-                  Descubrir fugas operativas exactas
-                </a>
-              </div>
-            </>
-          )}
+          <div className="button-row">
+            <button onClick={handleBack}>Back</button>
+            <a
+              href="https://calendly.com/ingresax/diagnostico"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-link"
+            >
+              Descubrir fugas operativas exactas
+            </a>
+          </div>
         </div>
       )}
     </div>
