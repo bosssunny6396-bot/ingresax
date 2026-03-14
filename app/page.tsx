@@ -19,11 +19,18 @@ export default function Home() {
           <li>Obtén una lectura financiera clara</li>
         </ul>
 
-        <div className="hero-actions">
-          <Link href="/calculator" className="primary-btn">
-            Analizar ahora
-          </Link>
-        </div>
+       <div className="hero-actions">
+  <Link href="/calculator" className="primary-btn">
+    Analizar ahora
+  </Link>
+  
+  {/* Trust indicators below the button */}
+  <div className="trust-indicators">
+    <span>✓ 2 minutos</span>
+    <span>✓ sin registro</span>
+    <span>✓ resultado inmediato</span>
+  </div>
+</div>
       </div>
 
       <div className="right dashboard-mockup">

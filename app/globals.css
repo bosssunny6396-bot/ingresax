@@ -5,8 +5,8 @@
 }
 
 body {
-  background: #0b0b0b;
-  color: #ffffff;
+  background: #1a1a1a;
+  color: #f5f5f5;
   font-family: Arial, sans-serif;
 }
 
@@ -46,7 +46,7 @@ body {
 }
 
 .left button {
-  background: #1d4ed8;
+  background: #3EBB61;
   color: white;
   border: none;
   padding: 14px 22px;
@@ -114,13 +114,13 @@ body {
   padding: 14px;
   border-radius: 10px;
   border: 1px solid #333;
-  background: #0b0b0b;
+  background: #1a1a1a;
   color: white;
   font-size: 16px;
 }
 
 .calculator-box button {
-  background: #1d4ed8;
+  background: #3EBB61;
   color: white;
   border: none;
   padding: 12px 18px;
@@ -135,7 +135,7 @@ body {
   border: 1px solid #222;
   border-radius: 18px;
   padding: 28px;
-  color: #ffffff;
+  color: #f5f5f5;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -154,7 +154,7 @@ body {
   padding: 14px 16px;
   border-radius: 10px;
   border: 1px solid #333;
-  background: #0b0b0b;
+  background: #1a1a1a;
   color: #fff;
   font-size: 16px;
   margin-bottom: 18px;
@@ -168,7 +168,7 @@ body {
 
 .calculator-box button,
 .cta-link {
-  background: #1d4ed8;
+  background: #3EBB61;
   color: #fff;
   border: none;
   padding: 12px 18px;
@@ -193,7 +193,7 @@ body {
 }
 
 .result-card {
-  background: #0b0b0b;
+  background: #1a1a1a;
   border: 1px solid #222;
   border-radius: 14px;
   padding: 16px;
@@ -207,7 +207,7 @@ body {
 }
 
 .result-card strong {
-  color: #ffffff;
+  color: #f5f5f5;
 }
 
 @media (max-width: 768px) {
@@ -246,7 +246,7 @@ body {
 
 .hero-list li {
   margin-bottom: 10px;
-  color: #ffffff;
+  color: #f5f5f5;
 }
 
 .hero-actions {
@@ -258,8 +258,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #1d4ed8;
-  color: #ffffff;
+  background: #3EBB61;
+  color: #f5f5f5;
   text-decoration: none;
   border-radius: 10px;
   padding: 14px 20px;
@@ -278,7 +278,7 @@ body {
 }
 
 .panel {
-  background: #111111;
+  background: #1a1a1a;
   border: 1px solid #222222;
   border-radius: 18px;
   padding: 20px;
@@ -325,7 +325,7 @@ body {
 .fake-chart span {
   display: block;
   width: 32px;
-  background: #1d4ed8;
+  background: #3EBB61;
   border-radius: 8px 8px 0 0;
 }
 
@@ -374,7 +374,7 @@ body {
 }
 
 .logo {
-  color: #ffffff;
+  color: #f5f5f5;
   text-decoration: none;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -391,12 +391,12 @@ body {
 }
 
 .nav-links a:hover {
-  color: #ffffff;
+  color: #f5f5f5;
 }
 
 .nav-cta {
-  background: #1d4ed8;
-  color: #ffffff;
+  background: #3EBB61;
+  color: #f5f5f5;
   text-decoration: none;
   padding: 10px 16px;
   border-radius: 10px;
@@ -413,7 +413,7 @@ body {
   font-size: 15px;
   line-height: 1.6;
   padding: 14px 16px;
-  background: #0b0b0b;
+  background: #1a1a1a;
   border: 1px solid #222;
   border-radius: 12px;
 }
@@ -424,7 +424,7 @@ body {
 .faq-container {
   max-width: 900px;
   margin: 0 auto;
-  color: #ffffff;
+  color: #f5f5f5;
 }
 
 .faq-container h2 {
@@ -456,7 +456,7 @@ body {
 
 .insights-page {
   min-height: 100vh;
-  background: #0b0b0b;
+  background: #1a1a1a;
   color: #fff;
   padding: 60px 40px;
 }
@@ -493,7 +493,7 @@ body {
 }
 
 .insight-card button {
-  background: #1d4ed8;
+  background: #3EBB61;
   color: #fff;
   border: none;
   padding: 12px 16px;
@@ -505,4 +505,23 @@ body {
   .insights-grid {
     grid-template-columns: 1fr;
   }
+}
+.trust-indicators {
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.trust-indicators span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trust-indicators span::before {
+  content: "✓";
+  color: #3EBB61; /* Financial Green */
+  font-weight: bold;
 }
