@@ -1,53 +1,110 @@
-import Calculator from "../../components/Calculator";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation"; // Use Next.js app router hook
+
+const steps = [
+  {
+    name: "revenue",
+    label: "Monthly Revenue",
+    placeholder: "Enter monthly revenue",
+  },
+  {
+    name: "foodCost",
+    label: "Food & Beverage Cost",
+    placeholder: "Enter food & beverage cost",
+  },
+  {
+    name: "laborCost",
+    label: "Labor Cost",
+    placeholder: "Enter labor cost",
+  },
+  {
+    name: "averageTicket",
+    label: "Average Ticket",
+    placeholder: "Enter average ticket",
+  },
+  {
+    name: "transactions",
+    label: "Monthly Transactions",
+    placeholder: "Enter monthly transactions",
+  },
+];
 
 export default function CalculatorPage() {
+  const [step, setStep] = useState(0);
+  const [inputs, setInputs] = useState({
+    revenue: "",
+    foodCost: "",
+    laborCost: "",
+    averageTicket: "",
+    transactions: "",
+  });
+  const [showResults, setShowResults] = useState(false);
+  const router = useRouter(); // Initialize Next.js router
+
+  const currentStep = steps[step];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleNext = () => {
+    const currentValue = inputs[currentStep.name as keyof typeof inputs];
+
+    if (!currentValue) {
+      alert("Please fill this field first.");
+      return;
+    }
+
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      setShowResults(true); // Show the "See Detailed Results" button
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  };
+
+  // Function to redirect to results page using next/navigation
+  const goToResults = () => {
+    router.push("/results"); // Redirect to the /results page
+  };
+
   return (
-    <main style={{ minHeight: "100vh", background: "#0B0B0B", padding: "40px 20px" }}>
-      <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center", color: "white" }}>
-        <p style={{ color: "#9CA3AF", marginBottom: "10px" }}>INGRESAX Diagnostic</p>
+    <div className="calculator-box">
+      {!showResults ? (
+        <>
+          <p>Step {step + 1} of {steps.length}</p>
+          <h2>{currentStep.label}</h2>
 
-        <h1 style={{ fontSize: "48px", marginBottom: "12px" }}>
-          Evalúa la salud financiera de tu restaurante
-        </h1>
+          <input
+            type="number"
+            name={currentStep.name}
+            value={inputs[currentStep.name as keyof typeof inputs]}
+            onChange={handleChange}
+            placeholder={currentStep.placeholder}
+          />
 
-        <p style={{ color: "#9CA3AF", maxWidth: "700px", margin: "0 auto 30px" }}>
-          Esta evaluación analiza los números básicos de tu restaurante para detectar posibles fugas de ingresos.
-        </p>
-      </div>
-
-      <Calculator />
-
-      <section className="faq-section">
-        <div className="faq-container">
-          <h2>Preguntas frecuentes</h2>
-
-          <div className="faq-item">
-            <h3>¿Cuánto tarda?</h3>
-            <p>La evaluación toma solo unos minutos y entrega un resultado inmediato.</p>
+          <div className="button-row">
+            {step > 0 && <button onClick={handleBack}>Back</button>}
+            <button onClick={handleNext}>
+              {step === steps.length - 1 ? "See Results" : "Next"}
+            </button>
           </div>
-
-          <div className="faq-item">
-            <h3>¿Qué datos se necesitan?</h3>
-            <p>Solo necesitas ventas mensuales, costo de alimentos y bebidas, costo laboral, ticket promedio y transacciones mensuales.</p>
-          </div>
-
-          <div className="faq-item">
-            <h3>¿Qué recibe el usuario?</h3>
-            <p>Recibes una lectura inicial de Prime Cost, estado operativo, posible fuga principal y una estimación de oportunidad mensual.</p>
-          </div>
-
-          <div className="faq-final-cta">
-            <a
-              href="[PASTE YOUR CALENDLY LINK HERE]"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="primary-btn"
-            >
-              Analizar con INGRESAX
-            </a>
-          </div>
+        </>
+      ) : (
+        <div className="results-panel">
+          <button onClick={goToResults}>See Detailed Results</button> {/* Button to redirect to results page */}
         </div>
-      </section>
-    </main>
+      )}
+    </div>
   );
 }
