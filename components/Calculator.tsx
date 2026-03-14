@@ -67,13 +67,14 @@ export default function Calculator() {
 
     if (step < steps.length - 1) {
       setStep(step + 1);
-    } else {
-      setIsLoading(true);
-      setTimeout(() => {
-        setShowResults(true);
-        setIsLoading(false);
-      }, 1500); // Simulate a 1.5-second delay
+      return;
     }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setShowResults(true);
+      setIsLoading(false);
+    }, 1500);
   };
 
   const handleBack = () => {
@@ -89,74 +90,70 @@ export default function Calculator() {
 
   const results = runDiagnostic(inputs);
   const hasError = typeof (results as any).error === "string";
-
   const primeCost = typeof results.primeCost === "number" ? results.primeCost : 0;
 
   const getStatusColor = (primeCost: number) => {
-    if (primeCost < 60) return "#16A34A"; // Healthy (Green)
-    if (primeCost <= 70) return "#EAB308"; // Unstable (Yellow)
-    return "#DC2626"; // Critical (Red)
+    if (primeCost < 60) return "#16A34A";
+    if (primeCost <= 70) return "#EAB308";
+    return "#DC2626";
   };
 
   const statusColor = getStatusColor(primeCost);
 
-  return (
-    <div className="calculator-box">
-      {!showResults ? (
+  const renderInputStep = () => (
+    <>
+      <p>
+        Step {step + 1} of {steps.length}
+      </p>
+
+      <h2>{currentStep.label}</h2>
+
+      <input
+        type="number"
+        name={currentStep.name}
+        value={inputs[currentStep.name as keyof typeof inputs]}
+        onChange={handleChange}
+        placeholder={currentStep.placeholder}
+      />
+
+      <p className="input-instructions">{currentStep.instructions}</p>
+
+      <div className="button-row">
+        {step > 0 && <button onClick={handleBack}>Back</button>}
+        <button onClick={handleNext}>
+          {step === steps.length - 1 ? "See Results" : "Next"}
+        </button>
+      </div>
+
+      {isLoading && <p>Calculando diagnóstico...</p>}
+    </>
+  );
+
+  const renderResults = () => (
+    <div className="results-panel">
+      {hasError ? (
         <>
-          <p>
-            Step {step + 1} of {steps.length}
-          </p>
-
-          <h2>{currentStep.label}</h2>
-
-          <input
-            type="number"
-            name={currentStep.name}
-            value={inputs[currentStep.name as keyof typeof inputs]}
-            onChange={handleChange}
-            placeholder={currentStep.placeholder}
-          />
-
-          <p className="input-instructions">{currentStep.instructions}</p>
-
+          <p className="results-label">Error</p>
+          <p className="diagnostic-warning">{(results as any).error}</p>
           <div className="button-row">
-            {step > 0 && <button onClick={handleBack}>Back</button>}
-            <button onClick={handleNext}>
-              {step === steps.length - 1 ? "See Results" : "Next"}
-            </button>
+            <button onClick={handleBack}>Back</button>
           </div>
-
-          {isLoading && <p>Calculando diagnÃ³stico...</p>}
         </>
       ) : (
-        <div className="results-panel">
-          {hasError ? (
-            <>
-              <p className="results-label">Error</p>
-              <p className="diagnostic-warning">{(results as any).error}</p>
-              <div className="button-row">
-                <button onClick={handleBack}>Back</button>
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="results-label">Diagnostic Result</p>
-              <h2>Restaurant Financial Snapshot</h2>
+        <>
+          <p className="results-label">Diagnostic Result</p>
+          <h2>Restaurant Financial Snapshot</h2>
 
-              {/* Prime Cost Section */}
-              <div className="result-card">
-                <span>Prime Cost %</span>
-                <strong style={{ color: statusColor }}>{primeCost}%</strong>
-              </div>
-
-          {/* Industry Range Section */}
           <div className="result-card">
-            <span>Industry Range</span>
-            <strong>55â€“60%</strong>
+            <span>Prime Cost %</span>
+            <strong style={{ color: statusColor }}>{primeCost}%</strong>
           </div>
 
-          {/* Gap Section */}
+          <div className="result-card">
+            <span>Industry Range</span>
+            <strong>55–60%</strong>
+          </div>
+
           <div className="result-card">
             <span>Gap</span>
             <strong>
@@ -168,19 +165,16 @@ export default function Calculator() {
             </strong>
           </div>
 
-          {/* Status Section */}
           <div className="result-card">
             <span>Status</span>
             <strong style={{ color: statusColor }}>{(results as any).status ?? "N/A"}</strong>
           </div>
 
-          {/* Largest Operational Leak */}
           <div className="result-card">
             <span>Largest Operational Leak</span>
             <strong>{(results as any).largestLeak ?? "N/A"}</strong>
           </div>
 
-          {/* Estimated Monthly Opportunity Section */}
           <div className="result-card">
             <span>Estimated Monthly Opportunity</span>
             <strong>${(results as any).estimatedOpportunity ?? "0"}</strong>
@@ -201,8 +195,10 @@ export default function Calculator() {
               Descubrir fugas operativas exactas
             </a>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
+
+  return <div className="calculator-box">{showResults ? renderResults() : renderInputStep()}</div>;
 }

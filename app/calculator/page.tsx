@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Use Next.js app router hook
+import { useNavigate } from "../../lib/useNavigate";
 
 const steps = [
   {
@@ -41,7 +41,8 @@ export default function CalculatorPage() {
     transactions: "",
   });
   const [showResults, setShowResults] = useState(false);
-  const router = useRouter(); // Initialize Next.js router
+  const [results, setResults] = useState<any>(null);
+  const navigate = useNavigate();
 
   const currentStep = steps[step];
 
@@ -62,49 +63,124 @@ export default function CalculatorPage() {
 
     if (step < steps.length - 1) {
       setStep(step + 1);
-    } else {
-      setShowResults(true); // Show the "See Detailed Results" button
+      return;
     }
+
+    setShowResults(true);
+
+    setResults({
+      primeCost: 64.2,
+      status: "Operational Pressure",
+      largestLeak: "Labor Cost",
+      estimatedOpportunity: 3600,
+      score: 72,
+      operationalInsight:
+        "When labor cost exceeds the healthy range, it usually indicates scheduling problems or low employee productivity.",
+    });
   };
 
   const handleBack = () => {
+    if (showResults) {
+      setShowResults(false);
+      return;
+    }
+
     if (step > 0) {
       setStep(step - 1);
     }
   };
 
-  // Function to redirect to results page using next/navigation
   const goToResults = () => {
-    router.push("/results"); // Redirect to the /results page
+    navigate("/results");
   };
 
   return (
     <div className="calculator-box">
-      {!showResults ? (
-        <>
-          <p>Step {step + 1} of {steps.length}</p>
-          <h2>{currentStep.label}</h2>
+      <p>
+        Step {step + 1} of {steps.length}
+      </p>
+      <h2>{currentStep.label}</h2>
 
-          <input
-            type="number"
-            name={currentStep.name}
-            value={inputs[currentStep.name as keyof typeof inputs]}
-            onChange={handleChange}
-            placeholder={currentStep.placeholder}
-          />
+      <input
+        type="number"
+        name={currentStep.name}
+        value={inputs[currentStep.name as keyof typeof inputs]}
+        onChange={handleChange}
+        placeholder={currentStep.placeholder}
+      />
+
+      <div className="button-row">
+        {step > 0 && <button onClick={handleBack}>Back</button>}
+        <button onClick={handleNext}>
+          {step === steps.length - 1 ? "See Results" : "Next"}
+        </button>
+      </div>
+
+      {showResults && results && (
+        <div className="results-panel">
+          <h3>Results</h3>
+          <div className="result-card">
+            <span>Prime Cost %</span>
+            <strong>{results.primeCost}%</strong>
+          </div>
+
+          <div className="result-card">
+            <span>Industry Range</span>
+            <strong>55â60%</strong>
+          </div>
+
+          <div className="result-card">
+            <span>Status</span>
+            <strong>{results.status}</strong>
+          </div>
+
+          <div className="result-card">
+            <span>Largest Operational Leak</span>
+            <strong>{results.largestLeak}</strong>
+          </div>
+
+          <div className="result-card">
+            <span>Estimated Monthly Opportunity</span>
+            <strong>${results.estimatedOpportunity}</strong>
+          </div>
 
           <div className="button-row">
-            {step > 0 && <button onClick={handleBack}>Back</button>}
-            <button onClick={handleNext}>
-              {step === steps.length - 1 ? "See Results" : "Next"}
-            </button>
+            <button onClick={goToResults}>See Detailed Results</button>
           </div>
-        </>
-      ) : (
-        <div className="results-panel">
-          <button onClick={goToResults}>See Detailed Results</button> {/* Button to redirect to results page */}
         </div>
       )}
+
+      <section className="faq-section">
+        <div className="faq-container">
+          <h2>Preguntas frecuentes</h2>
+
+          <div className="faq-item">
+            <h3>¿Cuánto tarda?</h3>
+            <p>La evaluación toma solo unos minutos y entrega un resultado inmediato.</p>
+          </div>
+
+          <div className="faq-item">
+            <h3>¿Qué datos se necesitan?</h3>
+            <p>Solo necesitas ventas mensuales, costo de alimentos y bebidas, costo laboral, ticket promedio y transacciones mensuales.</p>
+          </div>
+
+          <div className="faq-item">
+            <h3>¿Qué recibe el usuario?</h3>
+            <p>Recibes una lectura inicial de Prime Cost, estado operativo, posible fuga principal y una estimación de oportunidad mensual.</p>
+          </div>
+
+          <div className="faq-final-cta">
+            <a
+              href="[PASTE YOUR CALENDLY LINK HERE]"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="primary-btn"
+            >
+              Analizar con INGRESAX
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
-}
+}

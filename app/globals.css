@@ -6,7 +6,7 @@
 
 body {
   background: #1a1a1a;
-  color: #f5f5f5;
+  color: #ffffff;
   font-family: Arial, sans-serif;
 }
 
@@ -46,7 +46,7 @@ body {
 }
 
 .left button {
-  background: #3EBB61;
+  background: #1d4ed8;
   color: white;
   border: none;
   padding: 14px 22px;
@@ -193,7 +193,7 @@ body {
 }
 
 .result-card {
-  background: #1a1a1a;
+  background: #0b0b0b;
   border: 1px solid #222;
   border-radius: 14px;
   padding: 16px;
@@ -207,7 +207,7 @@ body {
 }
 
 .result-card strong {
-  color: #f5f5f5;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
@@ -413,7 +413,7 @@ body {
   font-size: 15px;
   line-height: 1.6;
   padding: 14px 16px;
-  background: #1a1a1a;
+  background: #0b0b0b;
   border: 1px solid #222;
   border-radius: 12px;
 }
@@ -524,4 +524,109 @@ body {
   content: "✓";
   color: #3EBB61; /* Financial Green */
   font-weight: bold;
+}
+
+.progress-indicator {
+  margin-top: 24px;
+  font-size: 16px;
+  color: #9ca3af; /* Soft white for text */
+}
+
+.progress-bar {
+  background-color: #333; /* Dark gray background for the progress bar */
+  border-radius: 8px;
+  width: 100%;
+  height: 8px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  background-color: #3EBB61; /* Financial green for progress */
+  height: 100%;
+  border-radius: 8px;
+}
+.input-instructions {
+  font-size: 14px;
+  color: #9ca3af; /* Soft white color */
+  margin-top: 8px;
+}
+.result-card {
+  background: #0b0b0b;
+  border: 1px solid #222;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.result-card span {
+  color: #9ca3af;
+}
+
+.result-card strong {
+  color: #ffffff;
+}
+
+.diagnostic-warning {
+  color: #9ca3af;
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  background: #0b0b0b;
+  border: 1px solid #222;
+  border-radius: 12px;
+}
+.results-page {
+  padding: 24px;
+  background-color: #111111;
+  color: white;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.results-header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.results-header .score h2 {
+  color: #3EBB61; /* Accent Green */
+}
+
+.result-card {
+  background: #333;
+  padding: 24px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
+
+.result-card span, .result-card strong {
+  color: white;
+  display: block;
+}
+
+.cta-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.primary-cta, .secondary-cta {
+  background-color: #3EBB61;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.micro-branding {
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 40px;
 }
