@@ -8,26 +8,31 @@ const steps = [
     name: "revenue",
     label: "Monthly Revenue",
     placeholder: "Enter monthly revenue",
+    instructions: "Use an approximate average of the last 3 months.",
   },
   {
     name: "foodCost",
     label: "Food & Beverage Cost",
     placeholder: "Enter food & beverage cost",
+    instructions: "Use the average cost of food and beverage for the last month.",
   },
   {
     name: "laborCost",
     label: "Labor Cost",
     placeholder: "Enter labor cost",
+    instructions: "Use the average labor cost for the last month.",
   },
   {
     name: "averageTicket",
     label: "Average Ticket",
     placeholder: "Enter average ticket",
+    instructions: "Average sales per customer during the last month.",
   },
   {
     name: "transactions",
     label: "Monthly Transactions",
     placeholder: "Enter monthly transactions",
+    instructions: "Use the total number of transactions made in the last month.",
   },
 ];
 
@@ -41,6 +46,7 @@ export default function Calculator() {
     averageTicket: "",
     transactions: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentStep = steps[step];
 
@@ -62,7 +68,11 @@ export default function Calculator() {
     if (step < steps.length - 1) {
       setStep(step + 1);
     } else {
-      setShowResults(true);
+      setIsLoading(true);
+      setTimeout(() => {
+        setShowResults(true);
+        setIsLoading(false);
+      }, 1500); // Simulate a 1.5-second delay
     }
   };
 
@@ -78,14 +88,17 @@ export default function Calculator() {
   };
 
   const results = runDiagnostic(inputs);
-const getStatusColor = (primeCost: number) => {
-  if (primeCost < 60) return "#16A34A";
-  if (primeCost <= 70) return "#EAB308";
-  return "#DC2626";
-};
+  const hasError = typeof (results as any).error === "string";
 
-const primeCostValue = Number(results.primeCost);
-const statusColor = getStatusColor(primeCostValue);
+  const getStatusColor = (primeCost: number) => {
+    if (primeCost < 60) return "#16A34A"; // Healthy (Green)
+    if (primeCost <= 70) return "#EAB308"; // Unstable (Yellow)
+    return "#DC2626"; // Critical (Red)
+  };
+
+  const primeCostValue = Number(results.primeCost ?? 0);
+  const statusColor = getStatusColor(primeCostValue);
+
   return (
     <div className="calculator-box">
       {!showResults ? (
@@ -104,51 +117,89 @@ const statusColor = getStatusColor(primeCostValue);
             placeholder={currentStep.placeholder}
           />
 
+          <p className="input-instructions">{currentStep.instructions}</p>
+
           <div className="button-row">
             {step > 0 && <button onClick={handleBack}>Back</button>}
             <button onClick={handleNext}>
               {step === steps.length - 1 ? "See Results" : "Next"}
             </button>
           </div>
+
+          {isLoading && <p>Calculando diagnóstico...</p>}
         </>
       ) : (
         <div className="results-panel">
-          <p className="results-label">Diagnostic Result</p>
-          <h2>Restaurant Financial Snapshot</h2>
+          {hasError ? (
+            <>
+              <p className="results-label">Error</p>
+              <p className="error-message">{(results as any).error}</p>
+              <div className="button-row">
+                <button onClick={handleBack}>Back</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="results-label">Diagnostic Result</p>
+              <h2>Restaurant Financial Snapshot</h2>
 
-         <div className="result-card">
-  <span>Prime Cost %</span>
-  <strong style={{ color: statusColor }}>{results.primeCost}%</strong>
-</div>
+              {/* Prime Cost Section */}
+              <div className="result-card">
+                <span>Prime Cost %</span>
+                <strong style={{ color: statusColor }}>{results.primeCost}%</strong>
+              </div>
 
-         <div className="result-card">
-  <span>Status</span>
-  <strong style={{ color: statusColor }}>{results.status}</strong>
-</div>
+              {/* Industry Range Section */}
+              <div className="result-card">
+                <span>Industry Range</span>
+                <strong>55–60%</strong>
+              </div>
 
-          <div className="result-card">
-            <span>Largest Operational Leak</span>
-            <strong>{results.largestLeak}</strong>
-          </div>
+              {/* Gap Section */}
+              <div className="result-card">
+                <span>Gap</span>
+                <strong>
+                  {results.primeCost > 60
+                    ? `${(results.primeCost - 60).toFixed(1)}% por encima del rango`
+                    : `${(60 - results.primeCost).toFixed(1)}% por debajo del rango`}
+                </strong>
+              </div>
 
-          <div className="result-card">
-            <span>Estimated Monthly Opportunity</span>
-            <strong>${results.estimatedOpportunity}</strong>
-          </div>
-<p className="diagnostic-warning">
-  Tu Prime Cost puede indicar un problema estructural.
-</p>
-          <div className="button-row">
-            <button onClick={handleBack}>Back</button>
-            <a
-              href="https://calendly.com/ingresax/diagnostico"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-link"
-            >
-               Descubrir fugas operativas exactas
-            </a>
-          </div>
+              {/* Status Section */}
+              <div className="result-card">
+                <span>Status</span>
+                <strong style={{ color: statusColor }}>{results.status}</strong>
+              </div>
+
+              {/* Largest Operational Leak */}
+              <div className="result-card">
+                <span>Largest Operational Leak</span>
+                <strong>{results.largestLeak}</strong>
+              </div>
+
+              {/* Estimated Monthly Opportunity Section */}
+              <div className="result-card">
+                <span>Estimated Monthly Opportunity</span>
+                <strong>${results.estimatedOpportunity}</strong>
+              </div>
+
+              <p className="diagnostic-warning">
+                Tu Prime Cost puede indicar un problema estructural.
+              </p>
+
+              <div className="button-row">
+                <button onClick={handleBack}>Back</button>
+                <a
+                  href="https://calendly.com/ingresax/diagnostico"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-link"
+                >
+                  Descubrir fugas operativas exactas
+                </a>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
