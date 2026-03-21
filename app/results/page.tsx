@@ -41,7 +41,7 @@ export default function Results() {
         <>
           {/* Page Header */}
           <header className="results-header">
-            <h1>Restaurant Financial Snapshot</h1>
+            <h1>Panorama financiero del restaurante</h1>
             <div className="score">
               <p>INGRESAX Score</p>
               <h2>{results?.score} / 100</h2>
@@ -53,7 +53,7 @@ export default function Results() {
 
           {/* Prime Cost Card */}
           <div className="result-card">
-            <span>Prime Cost %</span>
+            <span>Costo principal %</span>
             <strong style={{ color: statusColor }}>{results?.primeCost}%</strong>
             <span>Rango saludable: 55–60%</span>
             <span>Diferencia: {results?.primeCost > 60 ? `${(results.primeCost - 60).toFixed(1)}% por encima del rango` : `${(60 - results.primeCost).toFixed(1)}% por debajo del rango`}</span>
@@ -62,8 +62,8 @@ export default function Results() {
           {/* Operational Leak Card */}
           <div className="result-card">
             <span>Principal fuga operativa</span>
-            <strong>{results?.largestLeak}</strong>
-            <p>{results?.explanation}</p>
+            <strong>{results?.largestLeak || "No disponible"}</strong>
+            <p>{results?.explanation || "Se recomienda verificar los números de costos para generar una recomendación personalizada."}</p>
           </div>
 
           {/* Opportunity Card */}
@@ -78,9 +78,9 @@ export default function Results() {
           <div className="result-card">
             <h3>Escenario de mejora</h3>
             <ul>
-              <li>1% mejora: +${results?.improvement1} / mes</li>
-              <li>3% mejora: +${results?.improvement3} / mes</li>
-              <li>5% mejora: +${results?.improvement5} / mes</li>
+              <li>1% mejora: +${results?.improvement1 ?? "0"} / mes</li>
+              <li>3% mejora: +${results?.improvement3 ?? "0"} / mes</li>
+              <li>5% mejora: +${results?.improvement5 ?? "0"} / mes</li>
             </ul>
           </div>
 
@@ -98,12 +98,7 @@ export default function Results() {
           </div>
 
           {/* Secondary CTA */}
-          <div className="cta-container">
-            <a href="#" className="secondary-cta">
-              Descargar resumen financiero
-            </a>
-          </div>
-
+         
           {/* Footer Micro Branding */}
           <footer className="micro-branding">
             <p>INGRESAX Diagnostic Engine v1</p>

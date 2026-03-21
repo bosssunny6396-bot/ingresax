@@ -5,9 +5,12 @@
 }
 
 body {
-  background: #1a1a1a;
+  background-color: #000000; /* Pure Black Background */
   color: #ffffff;
-  font-family: Arial, sans-serif;
+  font-family: "Inter", sans-serif; /* You can change it to SF Pro if you have access to it */
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
 }
 
 .hero {
@@ -17,6 +20,7 @@ body {
   justify-content: space-between;
   padding: 60px 80px;
   gap: 40px;
+  background: #000000;
 }
 
 .left {
@@ -86,6 +90,17 @@ body {
   .right {
     width: 100%;
     min-height: 260px;
+  }
+   .hero h1 {
+    font-size: 40px;
+  }
+
+  .result-card {
+    margin-top: 20px;
+  }
+
+  .button-row {
+    flex-direction: column;
   }
 }
 
@@ -184,18 +199,19 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding: 24px;
 }
 
 .results-label {
   color: #9ca3af;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 0;
 }
 
 .result-card {
-  background: #0b0b0b;
-  border: 1px solid #222;
-  border-radius: 14px;
+  background: #222; /* Dark background for the result cards */
+  border: 1px solid #222; /* Subtle border */
+  border-radius: 12px;
   padding: 16px;
   display: flex;
   justify-content: space-between;
@@ -204,10 +220,13 @@ body {
 
 .result-card span {
   color: #9ca3af;
+  font-size: 14px;
 }
 
 .result-card strong {
   color: #ffffff;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {
@@ -370,7 +389,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
 }
 
 .logo {
@@ -388,18 +406,20 @@ body {
 .nav-links a {
   color: #9ca3af;
   text-decoration: none;
+  font-size: 16px;
 }
 
 .nav-links a:hover {
-  color: #f5f5f5;
+  color: #ffffff;
 }
 
 .nav-cta {
-  background: #3EBB61;
-  color: #f5f5f5;
-  text-decoration: none;
+  background: #3EBB61; /* Financial Green */
+  color: #ffffff;
   padding: 10px 16px;
   border-radius: 10px;
+  font-size: 16px;
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {
@@ -429,20 +449,23 @@ body {
 
 .faq-container h2 {
   font-size: 36px;
-  margin-bottom: 24px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .faq-item {
-  background: #111111;
+  background: #1a1a1a;
   border: 1px solid #222222;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 20px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .faq-item h3 {
-  margin-bottom: 10px;
   font-size: 20px;
+  color: #fff;
+  cursor: pointer;
 }
 
 .faq-item p {
@@ -536,13 +559,13 @@ body {
   background-color: #333; /* Dark gray background for the progress bar */
   border-radius: 8px;
   width: 100%;
-  height: 8px;
+  height: 4px; /* Thinner and more elegant progress bar */
   margin-top: 8px;
   margin-bottom: 20px;
 }
 
 .progress {
-  background-color: #3EBB61; /* Financial green for progress */
+  background-color: #3EBB61; /* Financial green for the progress */
   height: 100%;
   border-radius: 8px;
 }
@@ -552,7 +575,7 @@ body {
   margin-top: 8px;
 }
 .result-card {
-  background: #0b0b0b;
+  background: #2222;
   border: 1px solid #222;
   border-radius: 14px;
   padding: 16px;
@@ -580,7 +603,6 @@ body {
 }
 .results-page {
   padding: 24px;
-  background-color: #111111;
   color: white;
 }
 
@@ -629,4 +651,149 @@ body {
   font-size: 12px;
   color: #9ca3af;
   margin-top: 40px;
+}
+
+/* this is from here*/
+.results-page {
+  padding: 40px;
+  color: #fff;
+  font-family: Inter, sans-serif;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* HEADER */
+.results-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.results-header h1 {
+  font-size: 34px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.results-header .score {
+  margin-top: 10px;
+}
+
+.results-header .score h2 {
+  font-size: 30px;
+  margin: 5px 0;
+}
+
+.status {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* CARD BASE */
+.result-card {
+  background: #181c23;
+  border: 1px solid #262a33;
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 18px;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px 20px;
+  align-items: center;
+
+  transition: 0.2s ease;
+}
+
+.result-card:hover {
+  border-color: #3EBB61;
+}
+
+/* TEXT */
+.result-card span {
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: left;
+}
+
+.result-card strong {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.result-card p {
+  grid-column: span 2;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* SPECIAL LAYOUT FIXES */
+
+/* Prime cost row better spacing */
+.result-card:nth-child(2) {
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+}
+
+/* Opportunity card */
+.result-card:nth-child(4) strong {
+  font-size: 22px;
+}
+
+/* Improvement list */
+.result-card ul {
+  grid-column: span 2;
+  padding-left: 18px;
+  margin-top: 10px;
+}
+
+.result-card ul li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+/* CTA */
+.cta-container {
+  text-align: center;
+  margin-top: 35px;
+}
+
+.primary-cta, .secondary-cta {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 8px;
+  transition: 0.2s;
+}
+
+/* Primary button */
+.primary-cta {
+  background: #3EBB61;
+  color: white;
+}
+
+.primary-cta:hover {
+  background: #34a853;
+}
+
+/* Secondary button */
+.secondary-cta {
+  border: 1px solid #3EBB61;
+  color: #3EBB61;
+}
+
+.secondary-cta:hover {
+  background: #3EBB61;
+  color: white;
+}
+
+/* FOOTER */
+.micro-branding {
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 50px;
 }
